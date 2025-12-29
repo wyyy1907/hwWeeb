@@ -9,9 +9,1124 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
       crossorigin="anonymous"
     />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.12.16/dist/framer-motion.min.js"></script>
+    <style>
+      :root {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.5;
+        font-weight: 400;
+        font-synthesis: none;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      body {
+        min-height: 100vh;
+      }
+      
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
+      }
+      
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+      
+      /* 过渡动画 */
+      .transition-all {
+        transition: all 0.3s ease;
+      }
+      
+      .transition-colors {
+        transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+      }
+      
+      .transition-shadow {
+        transition: box-shadow 0.3s ease;
+      }
+      
+      /* 悬停效果 */
+      .hover\\:shadow-md:hover {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      }
+      
+      .hover\\:shadow-lg:hover {
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      }
+      
+      /* 深色模式支持 */
+      @media (prefers-color-scheme: dark) {
+        .dark\\:bg-gray-900 {
+          background-color: #111827;
+        }
+        
+        .dark\\:bg-gray-800 {
+          background-color: #1f2937;
+        }
+        
+        .dark\\:bg-gray-700 {
+          background-color: #374151;
+        }
+        
+        .dark\\:text-white {
+          color: #ffffff;
+        }
+        
+        .dark\\:text-gray-300 {
+          color: #d1d5db;
+        }
+        
+        .dark\\:text-gray-200 {
+          color: #e5e7eb;
+        }
+        
+        .dark\\:text-gray-400 {
+          color: #9ca3af;
+        }
+        
+        .dark\\:border-gray-700 {
+          border-color: #4b5563;
+        }
+        
+        .dark\\:border-gray-600 {
+          border-color: #6b7280;
+        }
+        
+        .dark\\:bg-red-900\\/50 {
+          background-color: rgba(185, 28, 28, 0.5);
+        }
+        
+        .dark\\:bg-red-400 {
+          background-color: #f87171;
+        }
+        
+        .dark\\:bg-blue-900\\/50 {
+          background-color: rgba(30, 64, 175, 0.5);
+        }
+        
+        .dark\\:bg-blue-400 {
+          background-color: #60a5fa;
+        }
+        
+        .dark\\:bg-green-900\\/50 {
+          background-color: rgba(22, 101, 52, 0.5);
+        }
+        
+        .dark\\:bg-green-400 {
+          background-color: #4ade80;
+        }
+        
+        .dark\\:bg-purple-900\\/50 {
+          background-color: rgba(88, 28, 135, 0.5);
+        }
+        
+        .dark\\:bg-purple-400 {
+          background-color: #a78bfa;
+        }
+        
+        .dark\\:bg-orange-900\\/50 {
+          background-color: rgba(146, 64, 14, 0.5);
+        }
+        
+        .dark\\:bg-orange-400 {
+          background-color: #fb923c;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+  <body class="bg-gray-50 text-gray-800">
+    <!-- 头部导航 -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+      <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="flex items-center">
+          <div class="h-10 w-10 rounded-md bg-red-600 flex items-center justify-center text-white font-bold text-xl mr-3">
+            华
+          </div>
+          <h1 class="text-xl font-bold">华为网络设备</h1>
+        </div>
+        
+        <nav class="hidden md:flex space-x-8">
+          <a href="#home" class="text-gray-600 hover:text-red-600 transition-colors">首页</a>
+          <a href="#products" class="text-gray-600 hover:text-red-600 transition-colors">产品</a>
+          <a href="#solutions" class="text-gray-600 hover:text-red-600 transition-colors">解决方案</a>
+          <a href="#services" class="text-gray-600 hover:text-red-600 transition-colors">服务</a>
+          <a href="#about" class="text-gray-600 hover:text-red-600 transition-colors">关于我们</a>
+        </nav>
+        
+        <div class="flex items-center space-x-4">
+          <button id="themeToggle" class="p-2 rounded-full bg-gray-100 text-gray-600">
+            <i class="fas fa-moon"></i>
+          </button>
+          <button class="hidden md:block px-6 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+            联系我们
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section id="home" class="py-20 bg-gradient-to-b from-red-50 to-white">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+          <div class="animate-fadeIn">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              构建全联接世界的<br />
+              <span class="text-red-600">智能网络基础设施</span>
+            </h1>
+            <p class="text-lg text-gray-600 mb-8">
+              华为网络设备致力于为全球企业提供安全可靠、高性能的网络解决方案，
+              助力企业数字化转型，共建智能未来。
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <a href="#products" class="px-8 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors inline-flex items-center justify-center">
+                探索产品
+              </a>
+              <a href="#solutions" class="px-8 py-3 border border-gray-300 text-gray-800 rounded-md hover:bg-gray-100 transition-colors inline-flex items-center justify-center">
+                查看解决方案
+              </a>
+            </div>
+          </div>
+          <div class="relative animate-fadeInRight">
+            <div class="rounded-xl overflow-hidden shadow-xl">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Huawei%20network%20equipment%20data%20center%2C%20servers%20and%20network%20switches%20in%20a%20modern%20data%20center%2C%20clean%20and%20professional&sign=cc8c4e88bff6dd292a66b4d3179d529c" 
+                alt="华为网络设备数据中心" 
+                class="w-full h-auto"
+              />
+            </div>
+            <!-- 品牌核心价值标记 -->
+            <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-lg shadow-lg">
+              <div class="flex items-center space-x-2">
+                <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
+                  <i class="fas fa-bolt text-blue-600"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold">技术领先</h3>
+                  <p class="text-xs text-gray-500">持续创新的核心技术</p>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -top-6 -right-6 bg-white p-4 rounded-lg shadow-lg">
+              <div class="flex items-center space-x-2">
+                <div class="h-10 w-10 rounded-full bg-green-100 flex items-center justify-center">
+                  <i class="fas fa-shield-alt text-green-600"></i>
+                </div>
+                <div>
+                  <h3 class="font-semibold">可靠安全</h3>
+                  <p class="text-xs text-gray-500">值得信赖的网络保障</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 品牌价值展示 */}
+    <section class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            华为网络设备的核心优势
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            我们凭借卓越的技术实力和创新能力，为全球客户提供领先的网络基础设施解决方案
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-8">
+          {/* 品牌传递要素卡片 */}
+          <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div class="h-14 w-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
+              <i class="fas fa-microchip text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">技术领先性</h3>
+            <p class="text-gray-600">拥有业界领先的研发团队和持续创新能力，不断突破技术瓶颈，引领行业发展方向。</p>
+          </div>
+          
+          <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div class="h-14 w-14 rounded-full bg-green-100 flex items-center justify-center mb-6">
+              <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">可靠性与安全性</h3>
+            <p class="text-gray-600">严格的质量控制体系和安全标准，确保产品在各种复杂环境下稳定运行，保障企业网络安全。</p>
+          </div>
+          
+          <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+            <div class="h-14 w-14 rounded-full bg-purple-100 flex items-center justify-center mb-6">
+              <i class="fas fa-robot text-purple-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">智能化与自动化</h3>
+            <p class="text-gray-600">融合AI技术，提供智能化网络管理和自动化运维能力，大幅提升网络效率和降低运维成本。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 产品与解决方案呈现 */}
+    <section id="products" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            核心产品与解决方案
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            华为网络设备提供全方位的产品系列和定制化解决方案，满足不同行业客户的多样化需求
+          </p>
+        </div>
+
+        {/* 产品分类标签 */}
+        <div class="flex flex-wrap justify-center gap-4 mb-12">
+          <button class="px-6 py-2 rounded-full border border-red-600 bg-red-600 text-white transition-colors">
+            全部产品
+          </button>
+          <button class="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors">
+            交换机
+          </button>
+          <button class="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors">
+            路由器
+          </button>
+          <button class="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors">
+            无线产品
+          </button>
+          <button class="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors">
+            安全产品
+          </button>
+          <button class="px-6 py-2 rounded-full border border-gray-300 text-gray-700 hover:bg-gray-100 transition-colors">
+            数据中心
+          </button>
+        </div>
+
+        {/* 产品展示 */}
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="h-48 overflow-hidden">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Huawei%20network%20switch%20CloudEngine%2016800%2C%20professional%20network%20equipment%2C%20modern%20design&sign=d5cecc716f449e36202b4a01d6e8f0f8" 
+                alt="CloudEngine 16800系列交换机" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">CloudEngine 16800系列交换机</h3>
+              <p class="text-gray-600 mb-4">面向数据中心和园区网络的高性能核心交换机，提供超大带宽和低延迟转发能力。</p>
+              <div class="flex justify-between items-center">
+                <a href="#product-detail" class="text-red-600 font-semibold flex items-center">
+                  了解详情
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="h-48 overflow-hidden">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Huawei%20router%20NetEngine%20AR%2C%20enterprise%20networking%20equipment%2C%20professional%20product%20shot&sign=5fd6f77fba40c86af2e94aaa7429f3c5" 
+                alt="NetEngine AR系列路由器" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">NetEngine AR系列路由器</h3>
+              <p class="text-gray-600 mb-4">企业级多业务路由器，支持SD-WAN，为分支机构提供安全可靠的广域网连接。</p>
+              <div class="flex justify-between items-center">
+                <a href="#product-detail" class="text-red-600 font-semibold flex items-center">
+                  了解详情
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="h-48 overflow-hidden">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Huawei%20wireless%20access%20point%20AirEngine%20Wi-Fi%206%2C%20modern%20network%20device&sign=23f965a90ae29eefe7e883d624405972" 
+                alt="AirEngine Wi-Fi 6系列" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">AirEngine Wi-Fi 6系列</h3>
+              <p class="text-gray-600 mb-4">基于Wi-Fi 6技术的高性能无线接入点，提供高速、稳定的无线连接体验。</p>
+              <div class="flex justify-between items-center">
+                <a href="#product-detail" class="text-red-600 font-semibold flex items-center">
+                  了解详情
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+          <a href="#products" class="inline-block px-8 py-3 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors">
+            查看全部产品
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 解决方案部分 */}
+    <section id="solutions" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            行业解决方案
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            华为网络设备为各行业提供定制化解决方案，满足不同场景的网络需求
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="h-48 overflow-hidden">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Huawei%20intelligent%20campus%20network%20solution%2C%20modern%20office%20building%20with%20network%20infrastructure%2C%20professional%20IT%20environment&sign=9ff6ceb77bc19c85748a3a1c976ab6d2" 
+                alt="智能园区网络解决方案" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">智能园区网络解决方案</h3>
+              <p class="text-gray-600 mb-4">基于AI驱动的意图网络架构，为企业提供超宽、极简、安全、智能的园区网络。</p>
+              <div class="flex justify-between items-center">
+                <a href="#solution-detail" class="text-red-600 font-semibold flex items-center">
+                  了解详情
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="h-48 overflow-hidden">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Huawei%20SD-WAN%20solution%20for%20enterprise%20branches%2C%20network%20diagram%20with%20multiple%20branch%20offices%2C%20professional%20IT%20infrastructure&sign=6ecddb9b412980fdc82ad7486208c61d" 
+                alt="企业分支SD-WAN解决方案" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">企业分支SD-WAN解决方案</h3>
+              <p class="text-gray-600 mb-4">通过集中管理和智能选路，帮助企业分支机构实现广域网的智能互联与优化。</p>
+              <div class="flex justify-between items-center">
+                <a href="#solution-detail" class="text-red-600 font-semibold flex items-center">
+                  了解详情
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+            <div class="h-48 overflow-hidden">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Huawei%20data%20center%20network%20solution%2C%20modern%20data%20center%20with%20servers%20and%20network%20equipment%2C%20professional%20IT%20infrastructure&sign=d690dc6f5dd8180c8353d9a458d5670b" 
+                alt="数据中心网络解决方案" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="p-6">
+              <h3 class="text-xl font-bold mb-2">数据中心网络解决方案</h3>
+              <p class="text-gray-600 mb-4">基于新一代Clos架构，提供超高带宽、超低延迟、超高可靠性的网络基础设施。</p>
+              <div class="flex justify-between items-center">
+                <a href="#solution-detail" class="text-red-600 font-semibold flex items-center">
+                  了解详情
+                  <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-12 text-center">
+          <a href="#solutions" class="inline-block px-8 py-3 border border-red-600 text-red-600 rounded-md hover:bg-red-50 transition-colors">
+            查看全部解决方案
+          </a>
+        </div>
+      </div>
+    </section>
+
+    {/* 客户服务体系设计 */}
+    <section id="services" class="py-16 bg-gray-50">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            全方位客户服务支持
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            华为网络设备致力于为客户提供全生命周期的服务支持，确保网络系统稳定运行
+          </p>
+        </div>
+
+        {/* 客户服务模块 */}
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div class="h-14 w-14 rounded-full bg-blue-100 flex items-center justify-center mb-6">
+              <i class="fas fa-headset text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">技术支持</h3>
+            <p class="text-gray-600 mb-6">7x24小时专业技术支持，快速响应和解决网络问题</p>
+            <a href="#technical-support" class="text-gray-800 font-medium flex items-center">
+              了解更多 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div class="h-14 w-14 rounded-full bg-green-100 flex items-center justify-center mb-6">
+              <i class="fas fa-graduation-cap text-green-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">培训认证</h3>
+            <p class="text-gray-600 mb-6">提供全面的产品培训和专业认证服务，提升团队能力</p>
+            <a href="#training-certification" class="text-gray-800 font-medium flex items-center">
+              了解更多 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div class="h-14 w-14 rounded-full bg-orange-100 flex items-center justify-center mb-6">
+              <i class="fas fa-tools text-orange-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">维保服务</h3>
+            <p class="text-gray-600 mb-6">灵活的维保方案，确保设备长期稳定运行和价值最大化</p>
+            <a href="#services" class="text-gray-800 font-medium flex items-center">
+              了解更多 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-all">
+            <div class="h-14 w-14 rounded-full bg-purple-100 flex items-center justify-center mb-6">
+              <i class="fas fa-robot text-purple-600 text-xl"></i>
+            </div>
+            <h3 class="text-xl font-bold mb-3">智能客服</h3>
+            <p class="text-gray-600 mb-6">AI驱动的智能客服系统，提供快速准确的自助服务体验</p>
+            <a href="#technical-support" class="text-gray-800 font-medium flex items-center">
+              了解更多 <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+        
+        {/* 服务请求快速入口 */}
+        <div class="mt-16 bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-8 text-white">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 class="text-2xl font-bold mb-4">需要技术支持？</h3>
+              <p class="mb-6">我们的技术专家团队随时为您提供帮助，解决您在使用过程中遇到的任何问题</p>
+              <div class="flex flex-wrap gap-4">
+                <button class="px-6 py-3 bg-white text-red-600 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                  提交服务请求
+                </button>
+                <button class="px-6 py-3 border border-white text-white rounded-md font-medium hover:bg-white/10 transition-colors">
+                  联系客服专家
+                </button>
+              </div>
+            </div>
+            <div class="hidden md:block flex justify-end">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=portrait_4_3&prompt=Huawei%20technical%20support%20team%20working%20on%20network%20solutions%2C%20professional%20engineers%20in%20office&sign=119efb654398a596946aa165091ba1f8" 
+                alt="华为技术支持团队" 
+                class="h-64 w-auto rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 关于我们部分 */}
+    <section id="about" class="py-16 bg-white">
+      <div class="container mx-auto px-4">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            关于华为网络设备
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            华为是全球领先的信息与通信技术解决方案供应商，致力于构建更美好的全联接世界
+          </p>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div>
+            <p class="text-gray-600 mb-4">
+              华为创立于1987年，是全球领先的信息与通信技术（ICT）解决方案供应商，专注于ICT领域，坚持稳健经营、持续创新、开放合作，
+              在电信运营商、企业、终端和云计算等领域构筑了端到端的解决方案优势，为运营商客户、企业客户和消费者提供有竞争力的ICT解决方案、
+              产品和服务，并致力于实现未来信息社会、构建更美好的全联接世界。
+            </p>
+            <p class="text-gray-600 mb-4">
+              华为网络设备是华为企业业务的核心组成部分，提供包括交换机、路由器、无线产品、安全产品、数据中心网络等全系列产品和解决方案，
+              服务于全球170多个国家和地区的企业客户，帮助客户实现数字化转型，提升业务效率和竞争力。
+            </p>
+            <div class="grid grid-cols-2 gap-6 mt-8">
+              <div>
+                <h3 class="text-3xl font-bold text-red-600 mb-2">1987</h3>
+                <p class="text-gray-600">公司成立</p>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-red-600 mb-2">170+</h3>
+                <p class="text-gray-600">服务国家和地区</p>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-red-600 mb-2">19.7万</h3>
+                <p class="text-gray-600">员工数量</p>
+              </div>
+              <div>
+                <h3 class="text-3xl font-bold text-red-600 mb-2">25%</h3>
+                <p class="text-gray-600">研发投入占比</p>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-xl overflow-hidden shadow-lg">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=portrait_4_3&prompt=Huawei%20network%20equipment%20R%26D%20center%2C%20professional%20engineers%20working%20on%20network%20technology&sign=8e8ae1a7f4d947d7eedec9e9e04f0616" 
+                alt="华为研发中心" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="rounded-xl overflow-hidden shadow-lg mt-8">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=portrait_4_3&prompt=Huawei%20network%20equipment%20production%20line%2C%20modern%20manufacturing%20facility%2C%20professional%20technology%20factory&sign=b5a85bde3bf72bab29f79a375615a1f7" 
+                alt="华为生产基地" 
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+        
+        <div class="bg-gradient-to-r from-red-600 to-red-700 rounded-2xl p-8 text-white">
+          <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+              <h3 class="text-2xl font-bold mb-4">加入华为网络设备团队</h3>
+              <p class="mb-6">
+                我们提供具有竞争力的薪酬待遇和广阔的发展空间，欢迎有才华、有激情的人才加入我们，
+                共同推动网络技术创新，构建更美好的全联接世界。
+              </p>
+              <button class="px-6 py-3 bg-white text-red-600 rounded-md font-medium hover:bg-gray-100 transition-colors">
+                查看职位空缺
+              </button>
+            </div>
+            <div class="hidden md:block flex justify-end">
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=portrait_4_3&prompt=Huawei%20team%20collaboration%2C%20professional%20IT%20engineers%20working%20together%20in%20office&sign=a5d23882893eb6b14e0163bff71ae098" 
+                alt="华为团队" 
+                class="h-64 w-auto rounded-lg shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* 产品详情模态框 */}
+    <div id="product-detail" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-6">
+            <h2 class="text-2xl font-bold">产品详情</h2>
+            <button id="close-product-detail" class="text-gray-500 hover:text-gray-800">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Huawei%20network%20switch%20CloudEngine%2016800%2C%20professional%20network%20equipment%2C%20modern%20design&sign=099db328d2daf6c168f3df7bcbae1151" 
+                alt="CloudEngine 16800系列交换机" 
+                class="w-full h-auto rounded-lg"
+              />
+            </div>
+            
+            <div>
+              <h3 class="text-2xl font-bold mb-4">CloudEngine 16800系列交换机</h3>
+              <p class="text-gray-600 mb-6">
+                华为CloudEngine 16800系列交换机是面向数据中心和园区网络的高性能核心交换机，采用创新的CLOS多级多平面交换架构，提供超大带宽和低延迟转发能力。
+              </p>
+              
+              <h4 class="text-lg font-semibold mb-3">产品特性</h4>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>超大容量：单槽位支持48 x 400GE端口，整机支持高达576 x 400GE端口</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>超低延迟：端口到端口转发延迟低至500ns</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>超高密度：单框最大支持17.28Tbps交换容量</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>智能运维：支持iFIT秒级故障定位和Telemetry实时流量监控</span>
+                </li>
+              </ul>
+              
+              <div class="flex space-x-4">
+                <button class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                  联系销售
+                </button>
+                <button class="px-6 py-3 border border-gray-300 text-gray-800 rounded-md hover:bg-gray-100 transition-colors">
+                  下载 datasheet
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* 解决方案详情模态框 */}
+    <div id="solution-detail" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-6">
+            <h2 class="text-2xl font-bold">解决方案详情</h2>
+            <button id="close-solution-detail" class="text-gray-500 hover:text-gray-800">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <img 
+                src="https://space.coze.cn/api/coze_space/gen_image?image_size=landscape_16_9&prompt=Huawei%20intelligent%20campus%20network%20solution%2C%20modern%20office%20building%20with%20network%20infrastructure%2C%20professional%20IT%20environment&sign=9ff6ceb77bc19c85748a3a1c976ab6d2" 
+                alt="智能园区网络解决方案" 
+                class="w-full h-auto rounded-lg"
+              />
+            </div>
+            
+            <div>
+              <h3 class="text-2xl font-bold mb-4">智能园区网络解决方案</h3>
+              <p class="text-gray-600 mb-6">
+                华为智能园区网络解决方案基于AI驱动的意图网络架构，为企业提供超宽、极简、安全、智能的园区网络，支持无线优先、全光联接、统一管理，助力企业数字化转型。
+              </p>
+              
+              <h4 class="text-lg font-semibold mb-3">方案优势</h4>
+              <ul class="space-y-2 mb-6">
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>提升员工体验：Wi-Fi 6高速接入，无缝漫游，保障关键业务应用</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>简化运维管理：AI智能运维，自动故障检测与修复，降低70%运维成本</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>增强安全防护：从边缘到云端的全栈安全防护，保障数据和业务安全</span>
+                </li>
+                <li class="flex items-start">
+                  <i class="fas fa-check text-green-600 mt-1 mr-2"></i>
+                  <span>加速业务创新：开放API，支持第三方应用集成，快速响应业务需求</span>
+                </li>
+              </ul>
+              
+              <div class="flex space-x-4">
+                <button class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                  申请方案演示
+                </button>
+                <button class="px-6 py-3 border border-gray-300 text-gray-800 rounded-md hover:bg-gray-100 transition-colors">
+                  下载方案白皮书
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* 底部导航 */}
+    <footer class="bg-gray-900 text-gray-300 py-16">
+      <div class="container mx-auto px-4">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+          {/* 公司信息 */}
+          <div>
+            <div class="flex items-center mb-6">
+              <div class="h-10 w-10 rounded-md bg-red-600 flex items-center justify-center text-white font-bold text-xl mr-3">
+                华
+              </div>
+              <h2 class="text-xl font-bold text-white">华为网络设备</h2>
+            </div>
+            <p class="mb-6">
+              华为是全球领先的信息与通信技术解决方案供应商，致力于构建更美好的全联接世界。
+            </p>
+            <div class="flex space-x-4">
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fab fa-facebook"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fab fa-linkedin"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+          
+          {/* 快速链接 */}
+          <div>
+            <h3 class="text-lg font-bold text-white mb-6">产品与解决方案</h3>
+            <ul class="space-y-3">
+              <li><a href="#products" class="text-gray-400 hover:text-white transition-colors">交换机</a></li>
+              <li><a href="#products" class="text-gray-400 hover:text-white transition-colors">路由器</a></li>
+              <li><a href="#products" class="text-gray-400 hover:text-white transition-colors">无线产品</a></li>
+              <li><a href="#products" class="text-gray-400 hover:text-white transition-colors">安全产品</a></li>
+              <li><a href="#products" class="text-gray-400 hover:text-white transition-colors">数据中心</a></li>
+              <li><a href="#products" class="text-gray-400 hover:text-white transition-colors">云服务</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-bold text-white mb-6">服务与支持</h3>
+            <ul class="space-y-3">
+              <li><a href="#technical-support" class="text-gray-400 hover:text-white transition-colors">技术支持</a></li>
+              <li><a href="#training-certification" class="text-gray-400 hover:text-white transition-colors">培训认证</a></li>
+              <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">维保服务</a></li>
+              <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">文档中心</a></li>
+              <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">软件下载</a></li>
+              <li><a href="#services" class="text-gray-400 hover:text-white transition-colors">服务请求</a></li>
+            </ul>
+          </div>
+          
+          <div>
+            <h3 class="text-lg font-bold text-white mb-6">关于华为</h3>
+            <ul class="space-y-3">
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">公司简介</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">企业文化</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">新闻中心</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">加入我们</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">联系我们</a></li>
+              <li><a href="#about" class="text-gray-400 hover:text-white transition-colors">全球站点</a></li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <p>&copy; {new Date().getFullYear()} 华为技术有限公司. 保留一切权利.</p>
+          <div class="flex space-x-6 mt-4 md:mt-0">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">隐私政策</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">使用条款</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">Cookie 政策</a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">法律声明</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- 技术支持页面 -->
+    <div id="technical-support" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-6">
+            <h2 class="text-2xl font-bold">技术支持中心</h2>
+            <button id="close-technical-support" class="text-gray-500 hover:text-gray-800">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          
+          <div class="mb-8">
+            <p class="text-gray-600 mb-6">
+              华为网络设备为您提供全方位的技术支持服务，包括知识库、软件下载、文档中心、常见问题解答等，
+              帮助您快速解决问题，保障网络系统稳定运行。
+            </p>
+            
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+              <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-16 w-16 rounded-full bg-red-100 flex items-center justify-center mb-6">
+                  <i class="fas fa-headset text-red-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">联系技术支持</h3>
+                <p class="text-gray-600 mb-6">
+                  7×24小时专业技术支持，快速响应和解决您的网络问题
+                </p>
+                <button class="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                  立即联系
+                </button>
+              </div>
+              
+              <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-16 w-16 rounded-full bg-blue-100 flex items-center justify-center mb-6">
+                  <i class="fas fa-file-alt text-blue-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">文档中心</h3>
+                <p class="text-gray-600 mb-6">
+                  访问产品手册、技术文档、配置指南等全面的技术资料
+                </p>
+                <button class="px-6 py-3 border border-gray-300 text-gray-800 rounded-md hover:bg-gray-100 transition-colors">
+                  浏览文档
+                </button>
+              </div>
+              
+              <div class="bg-gray-50 p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                <div class="h-16 w-16 rounded-full bg-green-100 flex items-center justify-center mb-6">
+                  <i class="fas fa-tools text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3">服务请求</h3>
+                <p class="text-gray-600 mb-6">
+                  提交服务请求，获取设备维修、替换、升级等专业服务
+                </p>
+                <button class="px-6 py-3 border border-gray-300 text-gray-800 rounded-md hover:bg-gray-100 transition-colors">
+                  提交请求
+                </button>
+              </div>
+            </div>
+            
+            <h3 class="text-xl font-bold mb-4">热门知识库文章</h3>
+            <div class="space-y-4">
+              <div class="border-b border-gray-200 pb-4">
+                <h4 class="text-lg font-semibold text-gray-800 mb-2">CloudEngine交换机初始化配置指南</h4>
+                <p class="text-gray-600 mb-2">本文档详细介绍了华为CloudEngine系列交换机的初始化配置步骤，包括基本设置、网络参数配置、用户管理等内容。</p>
+                <div class="flex justify-between items-center text-sm text-gray-500">
+                  <span>1254 次浏览</span>
+                  <span>2023-11-15</span>
+                </div>
+              </div>
+              
+              <div class="border-b border-gray-200 pb-4">
+                <h4 class="text-lg font-semibold text-gray-800 mb-2">NetEngine路由器故障排查手册</h4>
+                <p class="text-gray-600 mb-2">本手册提供了华为NetEngine系列路由器常见故障的排查方法和解决方案，帮助用户快速定位和解决网络问题。</p>
+                <div class="flex justify-between items-center text-sm text-gray-500">
+                  <span>987 次浏览</span>
+                  <span>2023-10-22</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 培训认证页面 -->
+    <div id="training-certification" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center hidden">
+      <div class="bg-white rounded-xl max-w-5xl w-full max-h-[90vh] overflow-y-auto">
+        <div class="p-6">
+          <div class="flex justify-between items-start mb-6">
+            <h2 class="text-2xl font-bold">培训与认证</h2>
+            <button id="close-training-certification" class="text-gray-500 hover:text-gray-800">
+              <i class="fas fa-times text-xl"></i>
+            </button>
+          </div>
+          
+          <div class="mb-8">
+            <p class="text-gray-600 mb-6">
+              华为网络设备提供全面的培训和认证体系，帮助您提升技术能力，获得行业认可，
+              为您的职业发展提供有力支持。
+            </p>
+            
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+              <button class="px-6 py-3 rounded-full bg-red-600 text-white flex items-center">
+                <i class="fas fa-book-open mr-2"></i>
+                培训课程
+              </button>
+              <button class="px-6 py-3 rounded-full bg-white text-gray-800 shadow-sm hover:shadow-md transition-shadow flex items-center">
+                <i class="fas fa-certificate mr-2"></i>
+                认证体系
+              </button>
+              <button class="px-6 py-3 rounded-full bg-white text-gray-800 shadow-sm hover:shadow-md transition-shadow flex items-center">
+                <i class="fas fa-laptop mr-2"></i>
+                在线学习
+              </button>
+              <button class="px-6 py-3 rounded-full bg-white text-gray-800 shadow-sm hover:shadow-md transition-shadow flex items-center">
+                <i class="fas fa-users mr-2"></i>
+                讲师团队
+              </button>
+            </div>
+            
+            <h3 class="text-xl font-bold mb-4">热门培训课程</h3>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                <div class="h-48 overflow-hidden">
+                  <img 
+                    src="https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Huawei%20network%20training%20course%20switch%20technology%2C%20professional%20IT%20training%20classroom&sign=1a2dba4977ff12e780edd648f8b0e03a" 
+                    alt="华为CloudEngine交换机技术与实践" 
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="p-6">
+                  <h4 class="text-lg font-bold mb-3">华为CloudEngine交换机技术与实践</h4>
+                  <div class="flex justify-between items-center text-sm text-gray-600 mb-4">
+                    <div class="flex items-center">
+                      <i class="fas fa-clock mr-1"></i>
+                      <span>3天</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-user mr-1"></i>
+                      <span>1254 人学习</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-red-600 font-bold">¥2,980</span>
+                    <button class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                      立即报名
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="bg-gray-50 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all">
+                <div class="h-48 overflow-hidden">
+                  <img 
+                    src="https://space.coze.cn/api/coze_space/gen_image?image_size=square&prompt=Huawei%20Wi-Fi%206%20training%20course%2C%20wireless%20network%20planning%2C%20professional%20IT%20training&sign=1fb1648c97652fcf7beaf3d64f9f5313" 
+                    alt="华为Wi-Fi 6网络规划与优化" 
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+                <div class="p-6">
+                  <h4 class="text-lg font-bold mb-3">华为Wi-Fi 6网络规划与优化</h4>
+                  <div class="flex justify-between items-center text-sm text-gray-600 mb-4">
+                    <div class="flex items-center">
+                      <i class="fas fa-clock mr-1"></i>
+                      <span>3天</span>
+                    </div>
+                    <div class="flex items-center">
+                      <i class="fas fa-user mr-1"></i>
+                      <span>1563 人学习</span>
+                    </div>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-red-600 font-bold">¥2,780</span>
+                    <button class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">
+                      立即报名
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+      // 主题切换功能
+      const themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          document.body.classList.toggle('dark');
+          const icon = themeToggle.querySelector('i');
+          if (icon.classList.contains('fa-moon')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+          } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+          }
+        });
+      }
+      
+      // 产品详情模态框
+      const productLinks = document.querySelectorAll('a[href="#product-detail"]');
+      const productDetail = document.getElementById('product-detail');
+      const closeProductDetail = document.getElementById('close-product-detail');
+      
+      productLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          productDetail.classList.remove('hidden');
+        });
+      });
+      
+      if (closeProductDetail) {
+        closeProductDetail.addEventListener('click', () => {
+          productDetail.classList.add('hidden');
+        });
+      }
+      
+      // 解决方案详情模态框
+      const solutionLinks = document.querySelectorAll('a[href="#solution-detail"]');
+      const solutionDetail = document.getElementById('solution-detail');
+      const closeSolutionDetail = document.getElementById('close-solution-detail');
+      
+      solutionLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          solutionDetail.classList.remove('hidden');
+        });
+      });
+      
+      if (closeSolutionDetail) {
+        closeSolutionDetail.addEventListener('click', () => {
+          solutionDetail.classList.add('hidden');
+        });
+      }
+      
+      // 技术支持页面
+      const technicalSupportLinks = document.querySelectorAll('a[href="#technical-support"]');
+      const technicalSupport = document.getElementById('technical-support');
+      const closeTechnicalSupport = document.getElementById('close-technical-support');
+      
+      technicalSupportLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          technicalSupport.classList.remove('hidden');
+        });
+      });
+      
+      if (closeTechnicalSupport) {
+        closeTechnicalSupport.addEventListener('click', () => {
+          technicalSupport.classList.add('hidden');
+        });
+      }
+      
+      // 培训认证页面
+      const trainingCertificationLinks = document.querySelectorAll('a[href="#training-certification"]');
+      const trainingCertification = document.getElementById('training-certification');
+      const closeTrainingCertification = document.getElementById('close-training-certification');
+      
+      trainingCertificationLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          trainingCertification.classList.remove('hidden');
+        });
+      });
+      
+      if (closeTrainingCertification) {
+        closeTrainingCertification.addEventListener('click', () => {
+          trainingCertification.classList.add('hidden');
+        });
+      }
+      
+      // 平滑滚动
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          // 跳过模态框链接
+          if (this.getAttribute('href') === '#product-detail' || 
+              this.getAttribute('href') === '#solution-detail' ||
+              this.getAttribute('href') === '#technical-support' ||
+              this.getAttribute('href') === '#training-certification') {
+            return;
+          }
+          
+          e.preventDefault();
+          
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+          });
+        });
+      });
+      
+      // 导航栏滚动效果
+      window.addEventListener('scroll', () => {
+        const header = document.querySelector('header');
+        if (window.scrollY > 50) {
+          header.classList.add('shadow-md');
+        } else {
+          header.classList.remove('shadow-md');
+        }
+      });
+    </script>
   </body>
 </html>
